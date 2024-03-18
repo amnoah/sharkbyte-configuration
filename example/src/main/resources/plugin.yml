@@ -1,0 +1,6 @@
+name: sb-configuration-example
+version: 1.0.0
+author: am noah
+description: An example of sharkbyte-configuration in work.
+api-version: 1.13
+main: sharkbyte.configuration.example.ConfigurationExample
