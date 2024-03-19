@@ -1,6 +1,7 @@
 package sharkbyte.configuration.core.configurable;
 
 import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import sharkbyte.configuration.core.ConfigurationFile;
 
@@ -17,13 +18,6 @@ import java.util.List;
 public abstract class Configurable {
 
     private ConfigurationFile configuration;
-
-    /**
-     * Initialize the Configurable object.
-     */
-    public Configurable(ConfigurationFile configuration) {
-        this.configuration = configuration;
-    }
 
     /*
      * Getters/Setters.
@@ -117,9 +111,26 @@ public abstract class Configurable {
         return getNode(nodes).get(vClass);
     }
 
-    /*
-     * Node Setters.
+    /**
+     * Return whether the given node is written in the configuration file.
      */
+    public boolean hasNode(String... node) {
+        return getNode(node).raw() != null;
+    }
+
+    /*
+     * Node Modifiers.
+     */
+
+    /**
+     * Removes the given node from the configuration file.
+     * Returns whether it was successful.
+     */
+    public boolean removeNode(String... nodes) {
+        ConfigurationNode node = configuration.getNode();
+        for (int i = 0; i < nodes.length - 1; i++) node = node.node(nodes[i]);
+        return node.removeChild(nodes[nodes.length - 1]);
+    }
 
     /**
      * Set a List value of the given node.

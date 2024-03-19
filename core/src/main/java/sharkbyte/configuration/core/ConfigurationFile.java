@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class ConfigurationFile {
 
+    private boolean checkVersion = true;
+
     private final InputStream inputStream;
     private final File file;
     private final Path directoryPath, filePath;
@@ -34,7 +36,23 @@ public class ConfigurationFile {
     private boolean modified;
 
     /**
-     * Initialize the ConfigurationFile object.
+     * Initialize the ConfigurationFile object based on a new file.
+     *
+     * @param name - The file's name (excluding .yml). Example: "config"
+     * @param directory - The folder that the file should be created in.
+     * @param version - The file's current sb-configuration-core-version (used for sb-configuration-core-version checking).
+     */
+    public ConfigurationFile(String name, Path directory, String version) {
+        this.name = name.toLowerCase();
+        this.version = version;
+        this.directoryPath = directory;
+        this.inputStream = null;
+        this.filePath = directoryPath.resolve(this.name + ".yml");
+        this.file = filePath.toFile();
+    }
+
+    /**
+     * Initialize the ConfigurationFile object based on a file in the resources bundle.
      *
      * @param name - The file's name (excluding .yml). Example: "config"
      * @param directory - The folder that the file should be created in.
@@ -63,6 +81,13 @@ public class ConfigurationFile {
     }
 
     /**
+     * Set whether the config's version should be checked upon loading.
+     */
+    public void setCheckVersion(boolean checkVersion) {
+        this.checkVersion = checkVersion;
+    }
+
+    /**
      * Sets the current modified status, determining whether the file will be saved at the end of the reload.
      * This will only be checked after the configurable.handleLoad() function is called and is reset at the beginning
      * of loads.
@@ -82,7 +107,15 @@ public class ConfigurationFile {
         // Create all directories and the file itself.
         if (!Files.exists(directoryPath)) Files.createDirectories(directoryPath);
         if (!file.exists()) {
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            if (inputStream != null) Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            else {
+                // Since it's a new file, we have to create it and write the current version.
+                file.createNewFile();
+                YamlConfigurationLoader configLoader = YamlConfigurationLoader.builder().nodeStyle(NodeStyle.BLOCK).path(filePath).build();
+                CommentedConfigurationNode node = configLoader.load();
+                node.node("v").set(String.class, version);
+                configLoader.save(node);
+            }
         }
     }
 
@@ -96,11 +129,13 @@ public class ConfigurationFile {
         YamlConfigurationLoader configLoader = YamlConfigurationLoader.builder().nodeStyle(NodeStyle.BLOCK).path(filePath).build();
         node = configLoader.load();
 
-        // Update the file if out of date, rebuilding the loader and node if updated.
-        String currentVersion = node.node("v").getString();
-        if (currentVersion == null || !currentVersion.equals(version)) {
-            updateFile();
-            node = configLoader.load();
+        if (checkVersion) {
+            // Update the file if out of date, rebuilding the loader and node if updated.
+            String currentVersion = node.node("v").getString();
+            if (currentVersion == null || !currentVersion.equals(version)) {
+                updateFile();
+                node = configLoader.load();
+            }
         }
 
         // Pass the reload to configurables, saving the file if one modified the file.

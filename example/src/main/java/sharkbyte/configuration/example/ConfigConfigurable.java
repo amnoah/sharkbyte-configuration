@@ -1,6 +1,5 @@
 package sharkbyte.configuration.example;
 
-import sharkbyte.configuration.core.ConfigurationFile;
 import sharkbyte.configuration.core.configurable.Configurable;
 
 import java.util.List;
@@ -19,8 +18,7 @@ public class ConfigConfigurable extends Configurable {
     /**
      * Initialize the Configurable object.
      */
-    public ConfigConfigurable(ConfigurationFile configuration, ConfigurationExample plugin) {
-        super(configuration);
+    public ConfigConfigurable(ConfigurationExample plugin) {
         this.plugin = plugin;
     }
 

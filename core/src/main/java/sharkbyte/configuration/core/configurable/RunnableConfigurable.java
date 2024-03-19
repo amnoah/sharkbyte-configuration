@@ -1,7 +1,5 @@
 package sharkbyte.configuration.core.configurable;
 
-import sharkbyte.configuration.core.ConfigurationFile;
-
 /**
  * This is an implementation of the Configurable object that allows for a runnable to called on load.
  * This allows you to create a new instance with a lambda function, not needing to create a new class.
@@ -17,13 +15,26 @@ import sharkbyte.configuration.core.ConfigurationFile;
  */
 public class RunnableConfigurable extends Configurable {
 
-    private final Runnable runnable;
+    private Runnable runnable;
 
     /**
-     * Initialize the Configurable object.
+     * Initialize the RunnableConfigurable object.
      */
-    public RunnableConfigurable(ConfigurationFile configuration, Runnable runnable) {
-        super(configuration);
+    public RunnableConfigurable() {
+        runnable = null;
+    }
+
+    /**
+     * Initialize the RunnableConfigurable object.
+     */
+    public RunnableConfigurable(Runnable runnable) {
+        this.runnable = runnable;
+    }
+
+    /**
+     * Set the associated runnable.
+     */
+    public void setRunnable(Runnable runnable) {
         this.runnable = runnable;
     }
 
@@ -32,6 +43,6 @@ public class RunnableConfigurable extends Configurable {
      */
     @Override
     public void handleLoad() {
-        runnable.run();
+        if (runnable != null) runnable.run();
     }
 }
