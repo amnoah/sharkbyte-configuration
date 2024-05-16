@@ -55,6 +55,13 @@ public abstract class Configurable {
      */
 
     /**
+     * Return the boolean located at a given node.
+     */
+    public boolean getBoolean(String... nodes) {
+        return getNode(nodes).getBoolean();
+    }
+
+    /**
      * Return the double located at a given node.
      */
     public double getDouble(String... nodes) {
