@@ -20,3 +20,9 @@ ConfigurationFile objects and call the load() function.
 
 BetterReload also allows for users to individually reload plugins, removing the need for a reload command to be built
 into every plugin.
+
+# how to use
+
+You can add sharkbyte-configuration to your project using [JitPack](https://jitpack.io/#amnoah/sharkbyte-configuration/1.0.0). 
+Select the dependency system you're using and copy the repository/dependency settings into your project. From there, 
+just reload your dependencies and you should have sharkbyte-configuration accessible from your project.
