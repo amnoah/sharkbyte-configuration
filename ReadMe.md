@@ -3,8 +3,9 @@
 # sharkbyte-configuration
 
 This is a platform-independent, object-oriented configuration management system originally developed for the sharkbyte
-project. It should be noted that it is intended to be shaded and will NOT handle file name conflicts, so it is
-recommended to keep your files in uniquely named directories.
+project. It works as a wrapper for the [Configurate](https://github.com/SpongePowered/Configurate) project, meant to
+make development easier. It should be noted that it is intended to be shaded and will NOT handle file name conflicts, 
+so it is recommended to keep your files in uniquely named directories.
 
 More information about each module can be found inside their respective folders.
 

@@ -5,6 +5,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import sharkbyte.configuration.core.ConfigurationFile;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -135,7 +136,7 @@ public abstract class Configurable {
     /**
      * Set a List value of the given node.
      */
-    public <V> void setList(Class<V> vClass, List<V> list, String... nodes) throws SerializationException {
+    public <V extends Serializable> void setList(Class<V> vClass, List<V> list, String... nodes) throws SerializationException {
         getNode(nodes).set(vClass, list);
         configuration.setModified(true);
     }
@@ -143,7 +144,7 @@ public abstract class Configurable {
     /**
      * Set the value of a given node.
      */
-    public <V> void setObject(Class<V> vClass, V obj, String... nodes) throws SerializationException {
+    public <V extends Serializable> void setObject(Class<V> vClass, V obj, String... nodes) throws SerializationException {
         getNode(nodes).set(vClass, obj);
         configuration.setModified(true);
     }

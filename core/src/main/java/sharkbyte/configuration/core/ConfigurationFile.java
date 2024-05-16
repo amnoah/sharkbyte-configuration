@@ -56,7 +56,7 @@ public class ConfigurationFile {
      *
      * @param name - The file's name (excluding .yml). Example: "config"
      * @param directory - The folder that the file should be created in.
-     * @param version - The file's current sb-configuration-core-version (used for sb-configuration-core-version checking).
+     * @param version - The file's current version (used for version checking).
      * @param inputStream - An input stream directing to the location of the file in the resources bundle.
      */
     public ConfigurationFile(String name, Path directory, String version, InputStream inputStream) {

@@ -81,7 +81,7 @@
                     <relocations>
                         <relocation>
                             <pattern>sharkbyte.configuration.core</pattern>
-                            <shadedPattern>sharkbyte.configuration.shade.core.sharkbyte.configuration.core</shadedPattern>
+                            <shadedPattern>sharkbyte.configuration.shade.configuration</shadedPattern>
                         </relocation>
                     </relocations>
                     <minimizeJar>true</minimizeJar>
