@@ -11,7 +11,7 @@ import java.nio.file.Path;
  *
  * @Author: am noah
  * @Since: 1.0.0
- * @Updated: 1.0.0
+ * @Updated: 1.0.1
  */
 public class ConfigurationExample extends JavaPlugin {
 
@@ -61,11 +61,7 @@ public class ConfigurationExample extends JavaPlugin {
 
         // Set the value of our runnable configurable.
         newConfigurable.setRunnable(() -> {
-            try {
-                newConfigurable.setObject(Long.class, 125L, "saved", "long");
-            } catch (Exception e) {
-                getLogger().warning("Could not save long!");
-            }
+            newConfigurable.setObject(Long.class, 125L, "saved", "long");
 
             getLogger().info("Has saved -> long? " + newConfigurable.hasNode("saved", "long"));
             getLogger().info("Has saved -> int? " + newConfigurable.hasNode("saved", "int"));

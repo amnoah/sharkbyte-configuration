@@ -97,7 +97,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org</pattern>
-                                    <shadedPattern>sharkbyte.configuration.shade.org</shadedPattern>
+                                    <shadedPattern>sharkbyte.configuration.core.shade.org</shadedPattern>
                                 </relocation>
                             </relocations>
                             <minimizeJar>true</minimizeJar>
