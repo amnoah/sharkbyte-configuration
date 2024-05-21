@@ -19,16 +19,17 @@ import java.util.List;
  *
  * @Author: am noah
  * @Since: 1.0.0
- * @Updated: 1.0.0
+ * @Updated: 1.0.1
  */
 public class ConfigurationFile {
 
     private boolean checkVersion = true;
+    private String version;
 
     private final InputStream inputStream;
     private final File file;
     private final Path directoryPath, filePath;
-    private final String name, version;
+    private final String name;
 
     private final List<Configurable> configurables = new ArrayList<>();
 
@@ -52,6 +53,21 @@ public class ConfigurationFile {
     }
 
     /**
+     * Initialize the ConfigurationFile object based on a new file.
+     *
+     * @param name - The file's name (excluding .yml). Example: "config"
+     * @param directory - The folder that the file should be created in.
+     */
+    public ConfigurationFile(String name, Path directory) {
+        this.name = name.toLowerCase();
+        this.checkVersion = false;
+        this.directoryPath = directory;
+        this.inputStream = null;
+        this.filePath = directoryPath.resolve(this.name + ".yml");
+        this.file = filePath.toFile();
+    }
+
+    /**
      * Initialize the ConfigurationFile object based on a file in the resources bundle.
      *
      * @param name - The file's name (excluding .yml). Example: "config"
@@ -62,6 +78,22 @@ public class ConfigurationFile {
     public ConfigurationFile(String name, Path directory, String version, InputStream inputStream) {
         this.name = name.toLowerCase();
         this.version = version;
+        this.directoryPath = directory;
+        this.inputStream = inputStream;
+        this.filePath = directoryPath.resolve(this.name + ".yml");
+        this.file = filePath.toFile();
+    }
+
+    /**
+     * Initialize the ConfigurationFile object based on a file in the resources bundle.
+     *
+     * @param name - The file's name (excluding .yml). Example: "config"
+     * @param directory - The folder that the file should be created in.
+     * @param inputStream - An input stream directing to the location of the file in the resources bundle.
+     */
+    public ConfigurationFile(String name, Path directory, InputStream inputStream) {
+        this.name = name.toLowerCase();
+        this.checkVersion = false;
         this.directoryPath = directory;
         this.inputStream = inputStream;
         this.filePath = directoryPath.resolve(this.name + ".yml");
@@ -111,10 +143,12 @@ public class ConfigurationFile {
             else {
                 // Since it's a new file, we have to create it and write the current version.
                 file.createNewFile();
-                YamlConfigurationLoader configLoader = YamlConfigurationLoader.builder().nodeStyle(NodeStyle.BLOCK).path(filePath).build();
-                CommentedConfigurationNode node = configLoader.load();
-                node.node("v").set(String.class, version);
-                configLoader.save(node);
+                if (checkVersion) {
+                    YamlConfigurationLoader configLoader = YamlConfigurationLoader.builder().nodeStyle(NodeStyle.BLOCK).path(filePath).build();
+                    CommentedConfigurationNode node = configLoader.load();
+                    node.node("v").set(String.class, version);
+                    configLoader.save(node);
+                }
             }
         }
     }
