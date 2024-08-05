@@ -26,3 +26,9 @@ into every plugin.
 You can add sharkbyte-configuration to your project using [JitPack](https://jitpack.io/#amnoah/sharkbyte-configuration/1.0.0). 
 Select the dependency system you're using and copy the repository/dependency settings into your project. From there, 
 just reload your dependencies and you should have sharkbyte-configuration accessible from your project.
+
+# support
+
+For general support, please join my [Discord server](https://discord.gg/ey9uTg3hcy).
+
+For issues with the project, please open an issue in the issues tab.
