@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>sharkbyte.configuration</groupId>
-    <artifactId>sharkbyte-configuration</artifactId>
+    <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -17,6 +17,8 @@
 
     <modules>
         <module>core</module>
-        <module>example</module>
+        <module>spigot</module>
+        <module>configurate</module>
+        <module>snakeyaml</module>
     </modules>
 </project>

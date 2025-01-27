@@ -25,6 +25,7 @@ replay_pid*
 
 # IntelliJ folders
 /.idea
+*.iml
 
 # Compile
 /*/target

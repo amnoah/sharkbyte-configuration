@@ -4,17 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>example</artifactId>
+    <artifactId>spigot</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
 
     <parent>
         <groupId>sharkbyte.configuration</groupId>
-        <artifactId>sharkbyte-configuration</artifactId>
-        <version>1.0.0</version>
+        <artifactId>parent</artifactId>
+        <version>2.0.0</version>
     </parent>
 
+    <prerequisites>
+        <maven>3.6.3</maven>
+    </prerequisites>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <repositories>
+        <!-- Repo for spigot-api -->
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -22,19 +32,17 @@
     </repositories>
 
     <dependencies>
-        <!-- version 1.20.4-R0.1-SNAPSHOT dropped Java 8 compatibility -->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.20.3-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>sharkbyte.configuration</groupId>
             <artifactId>core</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.21-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -43,9 +51,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.4.2</version>
                 <configuration>
-                    <finalName>sharkbyte-configuration-example-${project.version}</finalName>
+                    <finalName>sharkbyte-configuration-${artifactId}-${project.version}</finalName>
                     <archive>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -58,13 +66,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.13.0</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.6.0</version>
 
                 <configuration>
                     <filters>
@@ -77,14 +85,6 @@
                             </excludes>
                         </filter>
                     </filters>
-
-                    <relocations>
-                        <relocation>
-                            <pattern>sharkbyte.configuration.core</pattern>
-                            <shadedPattern>sharkbyte.configuration.shade.configuration</shadedPattern>
-                        </relocation>
-                    </relocations>
-                    <minimizeJar>true</minimizeJar>
                 </configuration>
 
                 <executions>
@@ -95,6 +95,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <minimizeJar>false</minimizeJar>
                         </configuration>
                     </execution>
                 </executions>
