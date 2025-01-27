@@ -35,7 +35,7 @@
         <dependency>
             <groupId>sharkbyte.configuration</groupId>
             <artifactId>core</artifactId>
-            <version>1.0.0</version>
+            <version>2.0.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
