@@ -25,9 +25,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.2.0</version>
                 <configuration>
-                    <finalName>sharkbyte-configuration-core-${project.version}</finalName>
+                    <finalName>sharkbyte-configuration-${artifactId}-${project.version}</finalName>
                     <archive>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.8.0</version>
             </plugin>
 
             <plugin>
@@ -69,13 +69,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <relocations>
-                                <relocation>
-                                    <pattern>org</pattern>
-                                    <shadedPattern>sharkbyte.configuration.core.shade.org</shadedPattern>
-                                </relocation>
-                            </relocations>
-                            <minimizeJar>true</minimizeJar>
+                            <minimizeJar>false</minimizeJar>
                         </configuration>
                     </execution>
                 </executions>
