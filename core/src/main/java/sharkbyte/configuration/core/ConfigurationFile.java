@@ -33,8 +33,10 @@ public abstract class ConfigurationFile {
             if (!Files.exists(directoryPath)) Files.createDirectories(directoryPath);
             File configFile = filePath.toFile();
 
-            if (input != null) Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
-            else configFile.createNewFile();
+            if (!Files.exists(filePath)) {
+                if (input != null) Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
+                else configFile.createNewFile();
+            }
 
             this.configFile = configFile;
         } catch(Exception e) {
